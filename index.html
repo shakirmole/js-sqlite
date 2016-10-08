@@ -1,0 +1,44 @@
+<html>
+	
+	<head>
+		<title> Javascript with SQLite </title>
+		<script src="jquery.js"></script>		
+		<script src="sql.js"></script>		
+		
+		<script>
+			var db;
+			
+			$( function() {
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', 'quran.sqlite', true);
+				xhr.responseType = 'arraybuffer';
+
+				xhr.onload = function(e) {
+				  var uInt8Array = new Uint8Array(this.response);
+				  db = new SQL.Database(uInt8Array);
+				};
+				xhr.send();
+			})
+			
+			function loadSuras() {
+				var contents = db.exec('select * from suras');
+				var keys = contents[0].columns;
+				var values = contents[0].values;
+				
+				for (i=0;i<values.length;i++) {
+					$('#content').append(values[i]+'<br>');
+				}
+			}
+		</script>
+	</head>
+	
+	<body>
+		<h1> Trial Run </h1>
+		<button onclick="loadSuras()">Load</button>
+		
+		<p id="content">
+		
+		<p>
+	</body>
+	
+</html>
