@@ -21,7 +21,7 @@
 			})
 			
 			function loadSuras() {
-				var contents = db.exec('select * from suras');
+				var contents = db.exec('select * from chapters');
 				var keys = contents[0].columns;
 				var values = contents[0].values;
 				
